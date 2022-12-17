@@ -1,66 +1,31 @@
-using System.Text;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Newtonsoft.Json;
-using TraktExportConverter.Models.WatchedShows;
+using TraktExportConverter.Models;
 
 namespace TraktExportConverter.Pages
 {
-    public class WatchedShowsModel : PageModel
+    public class WatchedShowsModel : BasePageModel
     {
-        [BindProperty]
-        public IFormFile? ImportFile { get; set; }
-
         public void OnGet()
         {
         }
 
         public async Task<IActionResult> OnPostImport()
         {
-            if (ImportFile == null)
+            var (result, shows) = await Import<Show>();
+
+            if (result != null)
             {
-                return Fail();
+                return result;
             }
 
-            try
-            {
-                await using var ms = new MemoryStream();
+            var watchedShows = (from show in shows
+                                from season in show.Seasons
+                                from episode in season.Episodes
+                                from playDate in episode.PlayDates
+                                select new WatchedShow(show.Title, show.Year, season.Number, episode.Number, playDate))
+                .ToList();
 
-                await ImportFile.CopyToAsync(ms);
-
-                var json = Encoding.UTF8.GetString(ms.ToArray());
-
-                if (string.IsNullOrEmpty(json))
-                {
-                    return Fail();
-                }
-
-                var shows = JsonConvert.DeserializeObject<List<Show>>(json);
-
-                if (shows == null || !shows.Any())
-                {
-                    return Fail();
-                }
-
-                var history = (from show in shows
-                               from season in show.Seasons
-                               from episode in season.Episodes
-                               from playDate in episode.PlayDates
-                               select new WatchedShow(show.Title, show.Year, season.Number, episode.Number, playDate))
-                    .ToList();
-
-                return Success(history);
-            }
-            catch (Exception e)
-            {
-                // TODO: Log
-
-                return Fail(e.Message);
-            }
+            return Success(watchedShows);
         }
-
-        private JsonResult Fail(string? error = null) => new(new { success = false, error = error ?? "Failed to import" });
-
-        private JsonResult Success(object data) => new(new { success = true, data });
     }
 }

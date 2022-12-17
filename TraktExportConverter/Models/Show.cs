@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace TraktExportConverter.Models.WatchedShows
+namespace TraktExportConverter.Models
 {
     public class Show
     {
