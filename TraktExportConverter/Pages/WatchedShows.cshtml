@@ -1,0 +1,30 @@
+﻿@page "{handler?}"
+@model WatchedShowsModel
+@{
+    ViewData["Title"] = "Watched Shows";
+}
+
+<div class="row justify-content-center">
+    <div class="col-9">
+        <table class="table table-striped" id="watched-shows-table">
+            <thead>
+            <tr>
+                <th>Show</th>
+                <th class="text-center">Episode</th>
+                <th class="text-center">Watched</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<form method="post" enctype="multipart/form-data" id="import-form" class="d-none">
+    <input asp-for="ImportFile" type="file" />
+</form>
+
+@section scripts
+{
+    <script src="~/js/watchedshows.js" asp-append-version="true"></script>
+}
