@@ -1,17 +1,16 @@
 ﻿@page "{handler?}"
-@model WatchedShowsModel
+@model WatchedModel
 @{
-    ViewData["Title"] = "Watched Shows";
+    ViewData["Title"] = "Watched";
 }
 
 <div class="row justify-content-center">
     <div class="col-9">
-        <table class="table table-striped" id="watched-shows-table">
+        <table class="table table-striped" id="watched-table">
             <thead>
             <tr>
-                <th>Show</th>
-                <th class="text-center">Episode</th>
-                <th class="text-end">Watched</th>
+                <th>Title</th>
+                <th class="text-end">Play Date</th>
             </tr>
             </thead>
             <tbody>
@@ -21,11 +20,11 @@
 </div>
 
 <form method="post" enctype="multipart/form-data" id="import-form" class="d-none">
-    <input asp-for="ImportFile" type="file" id="import-file" />
+    <input asp-for="ImportType" type="text" id="import-type"/>
+    <input asp-for="ImportFile" type="file" id="import-file"/>
 </form>
 
 @section scripts
-{
+    {
     <script src="~/js/watched.js" asp-append-version="true"></script>
-    <script src="~/js/watched-shows.js" asp-append-version="true"></script>
 }
