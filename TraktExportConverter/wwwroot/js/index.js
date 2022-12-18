@@ -1,4 +1,10 @@
-var watchedTable;
+var traktType = {
+    Movie: 1,
+    Show: 2,
+    Watchlist: 3
+}
+
+var traktTable;
 
 var clearForm = () => {
     $("#import-type").val("");
@@ -23,14 +29,14 @@ $("#import-form").submit(function (e) {
     e.preventDefault();
     const formData = new FormData($(this)[0]);
     $.ajax({
-        url: "/Watched/Import",
+        url: "/Import",
         type: "POST",
         data: formData,
         contentType: false,
         processData: false,
         success: function (data) {
             if (data.success) {
-                watchedTable.clear().rows.add(data.data).draw();
+                traktTable.clear().rows.add(data.data).draw();
             }
             else {
                 errorAlert(data.error);
@@ -45,7 +51,7 @@ var startImport = type => {
 }
 
 $(function () {
-    watchedTable = $("#watched-table").DataTable({
+    traktTable = $("#trakt-table").DataTable({
         dom: "<'row mb-3'<'col-12 text-end'B>>" +
             "<'row'<'col-6'l><'col-6'f>>" +
             "<'row'<'col-12'tr>>" +
@@ -60,13 +66,19 @@ $(function () {
                     {
                         text: "Shows",
                         action: function () {
-                            startImport("shows");
+                            startImport(traktType.Show);
                         }
                     },
                     {
                         text: "Movies",
                         action: function () {
-                            startImport("movies");
+                            startImport(traktType.Movie);
+                        }
+                    },
+                    {
+                        text: "Watchlist",
+                        action: function () {
+                            startImport(traktType.Watchlist);
                         }
                     }
                 ]
@@ -89,24 +101,26 @@ $(function () {
         ],
         columns: [
             {
+                data: "type",
+                width: "15%"
+            },
+            {
                 data: "title",
-                width: "50%"
+                width: "45%"
             },
             {
                 data: {
-                    "_": "playDate",
-                    display: "playDateDisplay"
+                    "_": "date",
+                    display: "dateDisplay"
                 },
-                width: "50%",
+                width: "40%",
                 class: "text-end"
             }
         ],
-        order: [
-            [1, "desc"]
-        ]
+        order: [[2, "desc"]]
     });
 
-    watchedTable.on("draw", function () {
+    traktTable.on("draw", function () {
         formatTime();
     });
 });

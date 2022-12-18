@@ -1,15 +1,32 @@
-﻿@page
+﻿@page "{handler?}"
 @model IndexModel
 @{
-    ViewData["Title"] = "Home";
+    ViewData["Title"] = "Import";
 }
 
-<div class="row justify-content-md-center">
-    <div class="col-md-auto">
-        <div class="card">
-            <ul class="list-group list-group-flush">
-                <a asp-page="/Watched" class="list-group-item list-group-item-action">Watched</a>
-            </ul>
-        </div>
+
+<div class="row justify-content-center">
+    <div class="col-9">
+        <table class="table table-striped" id="trakt-table">
+            <thead>
+            <tr>
+                <th>Type</th>
+                <th>Title</th>
+                <th class="text-end">Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
     </div>
 </div>
+
+<form method="post" enctype="multipart/form-data" id="import-form" class="d-none">
+    <input asp-for="ImportType" type="text" id="import-type"/>
+    <input asp-for="ImportFile" type="file" id="import-file"/>
+</form>
+
+@section scripts
+{
+    <script src="~/js/index.js" asp-append-version="true"></script>
+}

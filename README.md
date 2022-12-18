@@ -4,23 +4,19 @@
 
 In December 2022 the Trakt service had a database crash which has resulted in data loss
 
-On 17th December, Trakt released a beta version of the iOS App via Apple's TestFlight
+Trakt have released "export specific" versions of the app for [iOS (via Apple TestFlight)](https://forums.trakt.tv/t/export-specific-version-ios-1-8-29/12691) and [Android (via Android Firebase/Google Play)](https://forums.trakt.tv/t/export-specific-version-android-0-7-3/12855)
 
-This beta version has an export function which dumps the local data to JSON files
+These versions have an export function which dumps the local data to JSON files
 
 This may or may not be importable at a later date
 
-See forum post for more details: https://forums.trakt.tv/t/export-specific-version-ios-1-8-29/12691
-
-This web application imports the `<username>_watched_shows.json` and `<username>_watched_movies.json` files and displays them in a more user-friendly watch history list, along with options to export to Excel or CSV, or copy to clipboard
-
 ## Usage
+
+This web application imports the `<username>_watched_shows.json`, `<username>_watched_movies.json`, and `<username>_watchlist_items.json` files and displays them in a more user-friendly list, along with options to export to Excel or CSV, or copy to clipboard
 
 The site is available at https://traktexportconverter.doowruc.dev
 
-Click on Watched
-
-Click on Import then Shows or Movies
+Click on the Import button, then Shows, Movies, or Watchlist
 
 Browse to and select the relevant JSON file
 
