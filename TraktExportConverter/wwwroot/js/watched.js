@@ -22,7 +22,6 @@ $("#import-file").change(function (e) {
 $("#import-form").submit(function (e) {
     e.preventDefault();
     const formData = new FormData($(this)[0]);
-    console.log(formData);
     $.ajax({
         url: "/Watched/Import",
         type: "POST",
