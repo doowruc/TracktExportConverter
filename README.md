@@ -28,6 +28,10 @@ The page loads the converted data
 
 Optionally, click on Export then Excel, CSV, or Copy to clipboard
 
+## Security / Privacy
+
+The site does not store your JSON data, it uploads it to the server's memory in order to perform the conversion and return the converted data back to your browser for display
+
 ## Statement from Trakt (As of 18/12/2022)
 
 ### Trakt Data Recovery
